@@ -38,6 +38,11 @@ const downloadCompleteTemplate = () => {
   });
 };
 
+const removePnpmSetting = () => {
+  const removeFilePaths = [path.join(rootPath, "pnpm-lock.yaml"), path.join(rootPath, "pnpm-workspace.yaml")];
+  removeFilePaths.forEach(filePath => shelljs.rm("-rf", filePath));
+};
+
 const removeCliDir = () => {
   shelljs.rm("-rf", cliPath);
 };
@@ -63,6 +68,7 @@ const resetPackageJsonName = async () => {
 const shake = async () => {
   const downSpinner = ora("正在初始化模板...").start();
   try {
+    removePnpmSetting();
     removeCli();
     await resetPackageJsonName();
     downSpinner.succeed(chalk.green("模板初始化成功！"));
