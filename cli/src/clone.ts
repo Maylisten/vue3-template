@@ -45,6 +45,7 @@ const removeCliDir = () => {
 const removeCliPackageJsonScripts = () => {
   const jsonPath = path.join(rootPath, "package.json");
   deleteFileLines(jsonPath, /[Cc]li/);
+  deleteFileLines(jsonPath, "release");
 };
 
 const removeCli = () => {

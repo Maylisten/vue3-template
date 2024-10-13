@@ -9,6 +9,9 @@
     "dev": "vite",
     "build": "vue-tsc -b && vite build",
     "preview": "vite preview",
+    "cli:build": "pnpm run -C cli build",
+    "cli:dev": "pnpm run -C cli dev",
+    "release": "pnpm run cli:build && pnpm -C cli release",
     "lint": "eslint .",
     "fix": "eslint . --fix"
   },
