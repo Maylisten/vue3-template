@@ -13,6 +13,7 @@ let name = "";
 let completeName = "";
 let rootPath = "";
 let cliPath = "";
+let pnpmWorkspaceFilePath = "";
 
 const setProjectInfo = (option: UserOptions) => {
   const projectName = option.name;
@@ -21,6 +22,7 @@ const setProjectInfo = (option: UserOptions) => {
   completeName = `${domain}${domain ? "/" : ""}${name}`;
   rootPath = path.join(process.cwd(), name);
   cliPath = path.join(rootPath, 'cli');
+  pnpmWorkspaceFilePath = path.join(rootPath, 'pnpm-workspace.yaml');
 };
 
 const downloadCompleteTemplate = () => {
@@ -41,6 +43,10 @@ const downloadCompleteTemplate = () => {
 const removePnpmSetting = () => {
   const removeFilePaths = [path.join(rootPath, "pnpm-lock.yaml"), path.join(rootPath, "pnpm-workspace.yaml")];
   removeFilePaths.forEach(filePath => shelljs.rm("-rf", filePath));
+};
+
+const removePnpmWorkspaceFile = () => {
+  shelljs.rm("-rf", pnpmWorkspaceFilePath);
 };
 
 const removeCliDir = () => {
@@ -70,6 +76,7 @@ const shake = async () => {
   try {
     removePnpmSetting();
     removeCli();
+    removePnpmWorkspaceFile();
     await resetPackageJsonName();
     downSpinner.succeed(chalk.green("模板初始化成功！"));
   } catch (err) {
